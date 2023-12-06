@@ -1,0 +1,1 @@
+export const logo="src/constants/img.png"
