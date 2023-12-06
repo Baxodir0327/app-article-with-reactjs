@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-const Input = ({label, state, setState, type}) => {
+const Input = ({label, state, setState, type='text'}) => {
     return (
         <div>
             <div className="form-floating">
