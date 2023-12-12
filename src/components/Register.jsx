@@ -1,44 +1,39 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Input} from "../ui";
 import {useDispatch, useSelector} from "react-redux";
-import {singUserFailure, singUserStart, singUserSuccessfule} from "../slice/Auth";
-import AuthService from "../service/auth";
+import {singUserFailure, singUserStart, singUserSuccessful} from "../slice/Auth";
+import AuthService from "../service/Auth";
 import {ValidationError} from "./index";
+import {useNavigate} from "react-router-dom";
 
 const Register = () => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const dispatch = useDispatch()
-    const {isLoading} = useSelector(state => state.auth)
+    const {isLoading, loggedIn} = useSelector(state => state.auth)
+    const navigate = useNavigate()
 
-    const registerHandler =async (e) => {
+    const registerHandler = async (e) => {
         e.preventDefault()
         dispatch(singUserStart())
 
-        const user={email,password,username:name}
+        const user = {email, password, username: name}
 
         await AuthService.userRegister(user)
             .then(res => {
-                console.log(res.user)
-                dispatch(singUserSuccessfule(res.user))
+                dispatch(singUserSuccessful(res.user))
             })
-            .catch(error=>{
+            .catch(error => {
                 dispatch(singUserFailure(error.response.data.errors))
             })
-        // console.log(response)
-        // try {
-        //     const response=await AuthService.userRegister(user)
-        //     dispatch(registerUserSuccessfule())
-        //     console.log(response)
-        //     console.log(user)
-        // } catch (error) {
-        //     dispatch(registerUserFailure())
-        //     console.log(error)
-        // }
-
-
     }
+
+    useEffect(() => {
+        if (loggedIn)
+            navigate('/')
+    }, [loggedIn, navigate]);
+
     return (
         <div className='text-center'>
             <main className="form-signin w-25 m-auto mt-5">
@@ -52,7 +47,7 @@ const Register = () => {
                             disabled={isLoading}
                             className="w-100 btn btn-lg btn-primary mt-4"
                             type="submit">
-                        {isLoading? "loading" : "Register"}</button>
+                        {isLoading ? "loading" : "Register"}</button>
                 </form>
             </main>
         </div>

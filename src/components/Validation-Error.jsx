@@ -7,7 +7,7 @@ const ValidationError = () => {
     const errorMessage = useCallback(() => {
         return Object.keys(error).map(name => {
             const msg = error[name].join(', ')
-            return `${name} - ${msg}`
+            return `${name} : ${msg}`
         })
     }, [error]);
 
