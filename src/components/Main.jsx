@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
 import {Loader} from "../ui";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import ArticleService from "../service/Article";
 import {getArticlesSuccess} from "../slice/Article";
 import {useEffect} from "react";
@@ -59,7 +59,8 @@ const Main = () => {
                                     </button>
                                     {loggedIn && user.username === item.author.username && (
                                         <>
-                                            <button type="button" onClick={()=>navigate(`/edit-article/${item.slug}`)} className="btn btn-sm btn-outline-secondary">
+                                            <button type="button" onClick={() => navigate(`/edit-article/${item.slug}`)}
+                                                    className="btn btn-sm btn-outline-secondary">
                                                 Edit
                                             </button>
                                             <button type="button" onClick={() => deleteArticle(item.slug)}

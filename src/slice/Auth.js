@@ -17,17 +17,17 @@ export const authSlice = createSlice({
         singUserSuccessful: (state, action) => {
             state.isLoading = false
             state.loggedIn = true
-            state.user=action.payload
-            setItem('token',action.payload.token )
+            state.user = action.payload
+            setItem('token', action.payload.token)
 
         },
-        singUserFailure: (state,action) => {
+        singUserFailure: (state, action) => {
             state.isLoading = false
             state.error = action.payload
         },
         logoutUser: (state) => {
             state.user = null
-            state.loggedIn=false
+            state.loggedIn = false
             removeItem('token')
         },
     }
